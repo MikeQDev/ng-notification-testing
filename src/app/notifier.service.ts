@@ -1,5 +1,5 @@
 import { Injectable, OnInit } from '@angular/core';
-import { Subject, of } from 'rxjs';
+import { Subject, of, ReplaySubject } from 'rxjs';
 import { MyNotification } from './my-notification';
 
 @Injectable({
@@ -8,7 +8,7 @@ import { MyNotification } from './my-notification';
 export class NotifierService implements OnInit {
   private baseNotifications = [new MyNotification(1, 'someTitle1', 'someMessage1'), new MyNotification(2, 'someTitle2', 'someMessage2'), new MyNotification(3, 'someTitle3', 'someMessage3')];
 
-  private notificationsSource = new Subject<MyNotification>();
+  private notificationsSource = new ReplaySubject<MyNotification>();
   notifications$ = this.notificationsSource.asObservable();
 
   sendNotification(notification: MyNotification) {
@@ -16,9 +16,11 @@ export class NotifierService implements OnInit {
     console.log("notifier.service - Sent notification: " + JSON.stringify(notification))
   }
 
-  ngOnInit(): void {
+  constructor(){
     this.baseNotifications.forEach(baseNotification =>
       this.sendNotification(baseNotification)
-    )
+    )}
+
+  ngOnInit(): void {
   }
 }

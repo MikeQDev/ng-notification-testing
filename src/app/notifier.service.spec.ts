@@ -3,7 +3,7 @@ import { TestBed } from '@angular/core/testing';
 import { NotifierService } from './notifier.service';
 import { MyNotification } from './my-notification';
 import { JsonPipe } from '@angular/common';
-import { first, take } from 'rxjs/operators';
+import { first, take, skip } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 
 describe('NotifierService', () => {
@@ -19,9 +19,9 @@ describe('NotifierService', () => {
   });
 
   it('should send and receieve new notification', (done: DoneFn) => {
-    let sampleNotification: MyNotification = new MyNotification(1, 'someTitle', 'someMessage');
+    let sampleNotification: MyNotification = new MyNotification(0, 'someTitle', 'someMessage');
 
-    service.notifications$.subscribe(value => {
+    service.notifications$.pipe(skip(3)).subscribe(value => {
       console.log("RECVD:" + JSON.stringify(value));
       expect(value).toEqual(sampleNotification);
       done();
@@ -46,7 +46,7 @@ describe('NotifierService', () => {
     service.ngOnInit();
   });
 
-  it('should send and receieve new notifications on init', (done: DoneFn) => {
+  it('should send` and receieve new notifications on init', (done: DoneFn) => {
     let sampleNotification: MyNotification = new MyNotification(1, 'someTitle1', 'someMessage1');
 
     let first$: Observable<MyNotification> = service.notifications$.pipe(
