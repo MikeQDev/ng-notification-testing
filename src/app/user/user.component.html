@@ -1,0 +1,8 @@
+<h2>User</h2>
+<p>Welcome, <b>{{userName}}</b>. You have {{notifications.length}} notifications:</p>
+<ul>
+    <li *ngFor="let notification of notifications">
+        ({{ notification.id }}) <b>{{ notification.title }}</b> : {{ notification.message}}
+        <span style="color:red;cursor:pointer" (click)="dismissNotification(notification.id)">[X]</span>
+    </li>
+</ul>
