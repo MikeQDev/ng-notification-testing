@@ -31,6 +31,8 @@ describe('UserComponent', () => {
 
   it('should have proper username', () => {
     expect(component.userName).toEqual("new user");
+    fixture.detectChanges();
+    expect(welcomeParagraphEl.querySelector('b').textContent).toEqual("new user");
   });
 
   it('should have proper amount of notifications', () => {
