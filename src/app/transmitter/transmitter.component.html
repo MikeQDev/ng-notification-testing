@@ -1,0 +1,16 @@
+<h2>Transmitter</h2>
+<form [formGroup]="noticationForm" (ngSubmit)="sendNotification()">
+    <label>
+        Notification ID:
+        <input type="text" formControlName="notificationId" required>
+    </label>
+    <label>
+        Notification Title:
+        <input type="text" formControlName="notificationTitle" required>
+    </label>
+    <label>
+        Notification Message:
+        <input type="text" formControlName="notificationMessage" required>
+    </label>
+    <button type="submit" [disabled]="!noticationForm.valid">Send</button>
+</form>
