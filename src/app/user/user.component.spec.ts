@@ -1,6 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { UserComponent } from './user.component';
+import { NotifierService } from '../notifier.service';
 
 /**
  * Shouldn't this use a stub/mock service?
@@ -14,7 +15,8 @@ describe('UserComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [UserComponent]
+      declarations: [UserComponent],
+      //providers: [NotifierService]
     })
       .compileComponents();
   }));
@@ -39,6 +41,8 @@ describe('UserComponent', () => {
   });
 
   it('should have proper amount of notifications', () => {
+    expect(component.notifications.length).toEqual(0);
+    fixture.detectChanges(); // ngOnInit()
     expect(component.notifications.length).toEqual(3);
   });
 

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NotifierService } from '../notifier.service';
-import { MyNotification } from '../my-notification';
+
 @Component({
   selector: 'app-user',
   templateUrl: './user.component.html',
@@ -10,12 +10,7 @@ export class UserComponent implements OnInit {
   userName: string = 'new user';
   notifications = [];
 
-  constructor(notifierSvc: NotifierService) {
-    notifierSvc.notifications$.subscribe(notif => {
-      console.log("Received notification: "+notif)
-      this.notifications.push(notif)
-    });
-  }
+  constructor(private notifierSvc: NotifierService) { }
 
   dismissNotification(notificationId: number) {
     console.log("Dismissing notificationId '" + notificationId + "'");
@@ -23,6 +18,9 @@ export class UserComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.notifierSvc.notifications$.subscribe(notif => {
+      console.log("Received notification: " + notif)
+      this.notifications.push(notif)
+    });
   }
-
 }

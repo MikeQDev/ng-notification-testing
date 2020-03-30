@@ -42,8 +42,6 @@ describe('NotifierService', () => {
       expect(value).toEqual(sampleNotification); // using .toBe to check fails here?
       done();
     });
-
-    service.ngOnInit();
   });
 
   it('should send` and receieve new notifications on init', (done: DoneFn) => {
@@ -58,7 +56,5 @@ describe('NotifierService', () => {
       expect(value).toEqual(sampleNotification); // using .toBe to check fails here?
       done();
     });
-
-    service.ngOnInit();
   });
 });

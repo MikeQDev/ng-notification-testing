@@ -16,13 +16,7 @@ export class TransmitterComponent implements OnInit {
   })
   latestNotificationId: number = -1;
 
-  constructor(private fb: FormBuilder, private notifierService: NotifierService) {
-    this.notifierService.notifications$.subscribe(last => {
-      if (last.id > this.latestNotificationId) {
-        this.latestNotificationId = last.id;
-      }
-    });
-  }
+  constructor(private fb: FormBuilder, private notifierService: NotifierService) { }
 
   sendNotification() {
     this.notifierService.sendNotification(new MyNotification(++this.latestNotificationId,
@@ -30,6 +24,11 @@ export class TransmitterComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.notifierService.notifications$.subscribe(last => {
+      if (last.id > this.latestNotificationId) {
+        this.latestNotificationId = last.id;
+      }
+    });
   }
 
 }
