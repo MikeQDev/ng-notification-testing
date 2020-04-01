@@ -13,4 +13,5 @@
         <input type="text" formControlName="notificationMessage" required>
     </label>
     <button type="submit" [disabled]="!noticationForm.valid">Send</button>
+    <button (click)="close()">Close</button>
 </form>

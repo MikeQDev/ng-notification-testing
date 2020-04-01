@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { NotifierService } from '../notifier.service';
 import { MyNotification } from '../my-notification';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-transmitter',
@@ -16,7 +17,7 @@ export class TransmitterComponent implements OnInit {
   })
   latestNotificationId: number = -1;
 
-  constructor(private fb: FormBuilder, private notifierService: NotifierService) { }
+  constructor(private fb: FormBuilder, private notifierService: NotifierService, private router: Router) { }
 
   sendNotification() {
     this.notifierService.sendNotification(new MyNotification(++this.latestNotificationId,
@@ -24,11 +25,17 @@ export class TransmitterComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    console.log(this.latestNotificationId)
     this.notifierService.notifications$.subscribe(last => {
       if (last.id > this.latestNotificationId) {
         this.latestNotificationId = last.id;
       }
     });
+  }
+
+  close(): void {
+    this.router.navigate([{ outlets: { popup: null } }]);
+    //todo: don't destroy on close? instead, retain state?
   }
 
 }
