@@ -1,8 +1,12 @@
+<a [routerLink]="[{ outlets: { popup: ['compose'] } }]">Transmitter</a>
+
 <div class="row">
     <div class="column">
-        <app-user></app-user>
+        <router-outlet #routerOutlet="outlet"></router-outlet>
     </div>
-    <div class="column">
-        <app-transmitter></app-transmitter>
-    </div>
+    <router-outlet name="popup">
+        <div class="column">
+            <!--<app-transmitter></app-transmitter>-->
+        </div>
+    </router-outlet>
 </div>
