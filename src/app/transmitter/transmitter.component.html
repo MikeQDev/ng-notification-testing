@@ -2,15 +2,15 @@
 <form [formGroup]="noticationForm" (ngSubmit)="sendNotification()">
     <label>
         Notification ID:
-        <input type="text" formControlName="notificationId" required>
+        <input type="text" value="{{nextNotificationId}}" readonly />
     </label>
     <label>
         Notification Title:
-        <input type="text" formControlName="notificationTitle" required>
+        <input type="text" formControlName="notificationTitle" required />
     </label>
     <label>
         Notification Message:
-        <input type="text" formControlName="notificationMessage" required>
+        <input type="text" formControlName="notificationMessage" required />
     </label>
     <button type="submit" [disabled]="!noticationForm.valid">Send</button>
     <button (click)="close()">Close</button>

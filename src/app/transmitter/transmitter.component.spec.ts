@@ -2,7 +2,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { TransmitterComponent } from './transmitter.component';
 import { FormBuilder } from '@angular/forms';
-import { MyNotification } from '../my-notification';
+import { RouterTestingModule } from '@angular/router/testing';
 
 describe('TransmitterComponent', () => {
   let component: TransmitterComponent;
@@ -11,7 +11,10 @@ describe('TransmitterComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [TransmitterComponent],
-      providers: [FormBuilder]
+      providers: [FormBuilder],
+      imports: [RouterTestingModule
+        /*.withRoutes([{ path: 'composed', component: TransmitterComponent, outlet: 'popup' }])*/
+      ]
     })
       .compileComponents();
   }));
@@ -26,12 +29,12 @@ describe('TransmitterComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should maintain latestNotificationId #', () => {
-    let sampleNotification: MyNotification = new MyNotification(0, 'someTitle', 'someMessage');
-    expect(component.latestNotificationId).toEqual(3);
+  it('should track latestNotificationId #', () => {
+    fixture.detectChanges();
+    expect(component.nextNotificationId).toEqual(4);
     component.sendNotification();
-    expect(component.latestNotificationId).toEqual(4);
+    expect(component.nextNotificationId).toEqual(5);
     component.sendNotification();
-    expect(component.latestNotificationId).toEqual(5);
+    expect(component.nextNotificationId).toEqual(6);
   });
 });

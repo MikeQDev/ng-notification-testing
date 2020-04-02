@@ -10,26 +10,23 @@ import { Router } from '@angular/router';
   styleUrls: ['./transmitter.component.css']
 })
 export class TransmitterComponent implements OnInit {
+  nextNotificationId: number = -1;
   noticationForm = this.fb.group({
-    notificationId: ['a', Validators.required],
     notificationTitle: ['b', Validators.required],
     notificationMessage: ['c', Validators.required]
   })
-  latestNotificationId: number = -1;
 
   constructor(private fb: FormBuilder, private notifierService: NotifierService, private router: Router) { }
 
   sendNotification() {
-    this.notifierService.sendNotification(new MyNotification(++this.latestNotificationId,
+    this.notifierService.sendNotification(new MyNotification(this.nextNotificationId,
       this.noticationForm.value.notificationTitle, this.noticationForm.value.notificationMessage));
   }
 
   ngOnInit(): void {
-    console.log(this.latestNotificationId)
     this.notifierService.notifications$.subscribe(last => {
-      if (last.id > this.latestNotificationId) {
-        this.latestNotificationId = last.id;
-      }
+      // if (last.id > this.nextNotificationId) { // this was for lastNotificationId, not nextNotId
+      this.nextNotificationId = last.id + 1;
     });
   }
 
