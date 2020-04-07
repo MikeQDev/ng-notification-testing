@@ -4,20 +4,32 @@ import { Routes, RouterModule } from '@angular/router';
 import { UserComponent } from './user/user.component';
 import { TransmitterComponent } from './transmitter/transmitter.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
+import { AuthGuard } from './auth/auth.guard';
+import { LoginComponent } from './auth/login/login.component';
 
 const appRoutes: Routes = [
   {
     path: 'compose',
+    outlet: 'popup',
     component: TransmitterComponent,
-    outlet: 'popup'
+    // canLoad: [AuthGuard],
+    canActivate: [AuthGuard]
   },
   {
     path: 'user',
-    component: UserComponent
+    component: UserComponent,
+    // canLoad: [AuthGuard],
+    canActivate: [AuthGuard]
   },
   {
     path: '',
-    component: UserComponent
+    component: UserComponent,
+    // canLoad: [AuthGuard],
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'login',
+    component: LoginComponent
   },
   { path: '**', component: PageNotFoundComponent }
 ]
