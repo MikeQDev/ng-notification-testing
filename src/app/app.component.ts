@@ -7,4 +7,8 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'notification-example';
+
+  hasRouteActive(routePath: string): boolean {
+    return window.location.pathname.includes(routePath);
+  }
 }

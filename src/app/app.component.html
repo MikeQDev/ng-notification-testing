@@ -1,6 +1,7 @@
 <nav>
     <a [routerLink]="['/user']">User</a>
-    <a [routerLink]="[{ outlets: { popup: ['compose'] } }]">Transmitter</a>
+    <a *ngIf="!hasRouteActive('popup:compose')" [routerLink]="[{ outlets: { popup: ['compose'] } }]">Transmitter</a>
+    <a *ngIf="hasRouteActive('popup:compose')" [routerLink]="[{ outlets: { popup: null } }]">Transmitter</a>
     <a [routerLink]="['/login']">Login</a>
 </nav>
 <div class="row">
