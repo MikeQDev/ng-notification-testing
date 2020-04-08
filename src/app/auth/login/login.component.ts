@@ -35,6 +35,7 @@ export class LoginComponent {
   }
 
   logout() {
+    this.router.navigate([{ outlets: { popup: null } }]);
     this.authService.logout();
     this.setMessage();
   }
