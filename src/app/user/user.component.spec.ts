@@ -1,7 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { UserComponent } from './user.component';
-import { NotifierService } from '../notifier.service';
+import { AuthService } from '../auth/auth.service';
 
 /**
  * Shouldn't this use a stub/mock service?
@@ -12,16 +12,22 @@ describe('UserComponent', () => {
 
   let welcomeParagraphEl: HTMLParagraphElement;
   let notificationListEl: HTMLUListElement;
+  let mockUserName: string = "mockUser";
 
-  beforeEach(async(() => {
+  let authServiceStub: Partial<AuthService>;
+
+  beforeEach(() => {
+    authServiceStub = {
+      isLoggedIn: false,
+      userName: mockUserName
+    };
     TestBed.configureTestingModule({
       declarations: [UserComponent],
+      providers: [{ provide: AuthService, useValue: authServiceStub }]
       //providers: [NotifierService]
     })
       .compileComponents();
-  }));
 
-  beforeEach(() => {
     fixture = TestBed.createComponent(UserComponent);
     component = fixture.componentInstance;
     // fixture.detectChanges();
@@ -35,9 +41,10 @@ describe('UserComponent', () => {
   });
 
   it('should have proper username', () => {
-    expect(component.userName).toEqual("new user");
+    expect(component.userName).toEqual(component.userName);
     fixture.detectChanges();
-    expect(welcomeParagraphEl.querySelector('b').textContent).toEqual("new user");
+    expect(component.userName).toEqual(mockUserName);
+    expect(welcomeParagraphEl.querySelector('b').textContent).toEqual(mockUserName);
   });
 
   it('should have proper amount of notifications', () => {
@@ -49,7 +56,7 @@ describe('UserComponent', () => {
   it('should display welcome <username> with notification count', () => {
     expect(welcomeParagraphEl.textContent).toEqual("Welcome, ");
     fixture.detectChanges();
-    expect(welcomeParagraphEl.textContent).toEqual("Welcome, new user. You have 3 notifications:");
+    expect(welcomeParagraphEl.textContent).toEqual("Welcome, " + mockUserName + ". You have 3 notifications:");
   });
 
   it('should display proper amount of li bullet points for each notification', () => {

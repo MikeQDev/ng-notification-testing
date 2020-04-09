@@ -8,12 +8,14 @@ import { tap, delay } from 'rxjs/operators';
 })
 export class AuthService {
   isLoggedIn = false;
+  userName = "USER_NOT_LOGGED_IN";
 
   // store the URL so we can redirect after logging in
   redirectUrl: string;
 
-  login(): Observable<boolean> {
-    console.log("Logging in")
+  login(username: string): Observable<boolean> {
+    this.userName = username;
+    console.log("Logging in as " + this.userName)
     return of(true).pipe(
       delay(1000),
       tap(val => this.isLoggedIn = true)
@@ -21,7 +23,8 @@ export class AuthService {
   }
 
   logout(): void {
-    console.log("Logging out")
+    console.log("Logging out " + this.userName);
+    this.userName = "USER_NOT_LOGGED_IN";
     this.isLoggedIn = false;
   }
 
