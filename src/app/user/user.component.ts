@@ -19,7 +19,7 @@ export class UserComponent implements OnInit {
 
   ngOnInit(): void {
     this.notifierSvc.notifications$.subscribe(notif => {
-      console.log("Received notification: " + notif)
+      console.log("Received notification: " + JSON.stringify(notif))
       this.notifications.push(notif)
     });
   }
