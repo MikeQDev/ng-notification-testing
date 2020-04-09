@@ -6,7 +6,8 @@ import { RouteReuseStrategy, DetachedRouteHandle, ActivatedRouteSnapshot } from 
 export class CustomReuseStrategy implements RouteReuseStrategy {
     storedRouteHandles = new Map<string, DetachedRouteHandle>();
     allowRetriveCache = {
-        'compose': true
+        'compose': true,
+        'user': true
     };
 
     // Invoked when we leave the current route. If returns true, store function will be invoked
